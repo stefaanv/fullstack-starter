@@ -6,6 +6,12 @@
   "thunder-client.workspaceRelativePath": "./backend",
   "workbench.iconTheme": "material-icon-theme",
   "thunder-client.saveRequestOnSend": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/Thumbs.db": true,
+    "**/dist": true
+  },
   "material-icon-theme.files.associations": {
     "*.settings.ts": "Settings",
     "*.setting.ts": "Settings",

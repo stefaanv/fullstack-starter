@@ -1,5 +1,11 @@
 {
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}${separator}${profileName}",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/Thumbs.db": true,
+    "**/dist": true
+  },
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#fbed80",
     "activityBar.background": "#fbed80",

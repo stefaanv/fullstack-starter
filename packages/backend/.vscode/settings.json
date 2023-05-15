@@ -3,6 +3,12 @@
   "autoHide.autoHidePanel": false,
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}${separator}${profileName}",
+  "files.exclude": {
+    "**/.git": true,
+    "**/Thumbs.db": true,
+    "dist": true,
+    "tsconfig.tsbuildinfo": true
+  },
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#2f7c47",
     "activityBar.background": "#2f7c47",
