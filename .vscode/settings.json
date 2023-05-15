@@ -1,0 +1,5 @@
+{
+  "autoHide.autoHidePanel": false,
+  "autoHide.autoHideSideBar": false,
+  "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}${separator}${profileName}"
+}

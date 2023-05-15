@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "rangav.vscode-thunder-client",
+    "esbenp.prettier-vscode",
+    "Vue.volar",
+    "PKief.material-icon-theme",
+    "aaron-bond.better-comments",
+    "dbaeumer.vscode-eslint",
+    "johnpapa.vscode-peacock"
+  ]
+}
