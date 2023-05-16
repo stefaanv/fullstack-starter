@@ -2,8 +2,8 @@
   "autoHide.autoHidePanel": false,
   "autoHide.autoHideSideBar": false,
   "thunder-client.loadFromProject": true,
-  "thunder-client.customLocation": "./",
-  "thunder-client.workspaceRelativePath": "./backend",
+  "thunder-client.customLocation": "",
+  "thunder-client.workspaceRelativePath": "./",
   "workbench.iconTheme": "material-icon-theme",
   "thunder-client.saveRequestOnSend": false,
   "files.exclude": {

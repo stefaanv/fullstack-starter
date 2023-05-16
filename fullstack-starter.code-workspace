@@ -22,6 +22,7 @@
       "**/*.tsbuildinfo": true,
       "**/CVS": false,
       "**/dist": true
-    }
+    },
+    "thunder-client.workspaceRelativePath": "./"
   }
 }
