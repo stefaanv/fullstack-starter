@@ -24,7 +24,6 @@
   },
   "peacock.color": "#215732",
   "thunder-client.saveToWorkspace": true,
-  "thunder-client.loadFromProject": true,
   "thunder-client.workspaceRelativePath": ".",
   "thunder-client.saveRequestOnSend": false,
   "workbench.iconTheme": "material-icon-theme",

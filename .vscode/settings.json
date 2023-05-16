@@ -1,8 +1,5 @@
 {
-  "autoHide.autoHidePanel": false,
-  "autoHide.autoHideSideBar": false,
   "thunder-client.saveToWorkspace": true,
-  "thunder-client.loadFromProject": true,
   "thunder-client.workspaceRelativePath": "./packages/backend",
   "thunder-client.saveRequestOnSend": false,
   "files.exclude": {
