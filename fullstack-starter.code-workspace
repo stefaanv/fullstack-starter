@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "path": "packages/shared"
+    },
+    {
+      "path": "packages/backend"
+    },
+    {
+      "path": "packages/frontend"
+    }
+  ],
+  "settings": {
+    "peacock.darkForegroundColor": "",
+    "files.exclude": {
+      "**/.svn": false,
+      "**/.vscode": true,
+      "**/*.tsbuildinfo": true,
+      "**/CVS": false,
+      "**/dist": true
+    }
+  }
+}

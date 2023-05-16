@@ -7,10 +7,14 @@
   "workbench.iconTheme": "material-icon-theme",
   "thunder-client.saveRequestOnSend": false,
   "files.exclude": {
+    "**/.DS_Store": false,
     "**/.git": true,
-    "**/.svn": true,
-    "**/Thumbs.db": true,
-    "**/dist": true
+    "**/.hg": false,
+    "**/.svn": false,
+    "**/.vscode": true,
+    "**/*.tsbuildinfo": true,
+    "**/dist": true,
+    "**/Thumbs.db": true
   },
   "material-icon-theme.files.associations": {
     "*.settings.ts": "Settings",
@@ -42,6 +46,5 @@
     "repositories": "Dump"
   },
   "thunder-client.saveToWorkspace": true,
-
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}${separator}${profileName}"
 }
