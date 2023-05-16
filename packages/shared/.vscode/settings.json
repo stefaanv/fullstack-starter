@@ -19,5 +19,12 @@
     "titleBar.inactiveBackground": "#f9e64f99",
     "titleBar.inactiveForeground": "#15202b99"
   },
-  "peacock.color": "#f9e64f"
+  "peacock.color": "#f9e64f",
+  "files.exclude": {
+    "**/.DS_Store": false,
+    "**/.hg": false,
+    "**/.svn": false,
+    "**/CVS": false,
+    "thunder-tests": true
+  }
 }
