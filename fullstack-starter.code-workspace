@@ -8,6 +8,10 @@
     },
     {
       "path": "packages/frontend"
+    },
+    {
+      "path": ".",
+      "name": "root"
     }
   ],
   "settings": {
