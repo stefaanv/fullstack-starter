@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "290bd50e-da50-495f-a6c9-d9b13cb79031",
+    "colId": "ff747450-e0b0-47c0-981d-2e608ca5e698",
+    "containerId": "",
+    "name": "get version",
+    "url": "{{baseUrl}}/api/version",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-05-16T10:02:46.852Z",
+    "modified": "2023-05-16T10:03:03.487Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]

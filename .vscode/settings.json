@@ -4,7 +4,6 @@
   "thunder-client.saveToWorkspace": true,
   "thunder-client.loadFromProject": true,
   "thunder-client.workspaceRelativePath": "./packages/backend",
-  "workbench.iconTheme": "material-icon-theme",
   "thunder-client.saveRequestOnSend": false,
   "files.exclude": {
     "**/.DS_Store": false,
@@ -16,6 +15,7 @@
     "**/dist": true,
     "**/Thumbs.db": true
   },
+  "workbench.iconTheme": "material-icon-theme",
   "material-icon-theme.files.associations": {
     "*.settings.ts": "Settings",
     "*.setting.ts": "Settings",
