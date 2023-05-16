@@ -23,6 +23,6 @@
       "**/CVS": false,
       "**/dist": true
     },
-    "thunder-client.workspaceRelativePath": "./"
+    "thunder-client.workspaceRelativePath": "./packages/backend"
   }
 }

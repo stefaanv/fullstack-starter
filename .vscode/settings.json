@@ -1,9 +1,9 @@
 {
   "autoHide.autoHidePanel": false,
   "autoHide.autoHideSideBar": false,
+  "thunder-client.saveToWorkspace": true,
   "thunder-client.loadFromProject": true,
-  "thunder-client.customLocation": "",
-  "thunder-client.workspaceRelativePath": "./",
+  "thunder-client.workspaceRelativePath": "./packages/backend",
   "workbench.iconTheme": "material-icon-theme",
   "thunder-client.saveRequestOnSend": false,
   "files.exclude": {
@@ -45,6 +45,5 @@
     "search.route": "Routes",
     "repositories": "Dump"
   },
-  "thunder-client.saveToWorkspace": true,
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}${separator}${profileName}"
 }
