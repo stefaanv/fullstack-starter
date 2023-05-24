@@ -1,5 +1,5 @@
 {
-  "test": "mijn test zin",
+  "windowTitle": "Nest.js/Vue3/Typescript fullstack starter",
   "port": "{{PORT}}",
   "database": {
     "host": "{{DB_HOST}}",
