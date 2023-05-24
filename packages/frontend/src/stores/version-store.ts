@@ -17,7 +17,7 @@ export const useVersionStore = defineStore('version', {
     } as StarterDto,
   }),
   actions: {
-    async getState() {
+    async load() {
       const response = await fetch(`${baseUrl}/api/version`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },

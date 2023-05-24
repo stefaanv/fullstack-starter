@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useVersionStore } from '../stores/version-store'
+import { useVersionStore } from '@stores/version-store'
 const versionStore = useVersionStore()
-await versionStore.getState()
 const version = versionStore.version
 
 defineProps<{ msg: string }>()
