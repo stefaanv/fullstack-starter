@@ -1,14 +1,12 @@
 import { Controller, Get } from '@nestjs/common'
-import { VersionService } from './version/version.service'
-import { StarterDto } from '@nest-vue-starter/shared'
+import { AppService } from './app.service'
 
 @Controller()
 export class AppController {
-  constructor(private readonly _versionService: VersionService) {}
+  constructor(private readonly _appService: AppService) {}
 
   @Get('version')
   getVersion() {
-    const dto = new StarterDto()
-    return { ...this._versionService.all, ...dto }
+    return this._appService.version
   }
 }

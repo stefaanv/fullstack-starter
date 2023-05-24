@@ -5,9 +5,8 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
 import { LogFacade } from './logging/logger'
-import { VersionService } from './version/version.service'
 
-export const APP_NAME = 'load-shifter'
+export const APP_NAME = 'fullstack-starter'
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,7 +26,7 @@ export const APP_NAME = 'load-shifter'
       useClass: LogFacade,
       scope: Scope.TRANSIENT,
     },
-    VersionService,
+    AppService,
   ],
 })
 export class AppModule {}

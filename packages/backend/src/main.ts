@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 import { LogFacade } from './logging/logger'
-import { VersionService } from './version/version.service'
+import { AppService } from './app.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -11,7 +11,7 @@ async function bootstrap() {
   const port = parseInt(config.get<string>('PORT', '3005'))
   const globalApiPrefix = config.get<string>('API_PREFIX', 'api')
   app.setGlobalPrefix(globalApiPrefix)
-  const version = app.get(VersionService).all
+  const version = app.get(AppService).version
   const log = await app.resolve(LogFacade)
 
   log.log(`Starting ${version.name} v${version.version}`, { meta: version })
