@@ -3,6 +3,7 @@
     "rangav.vscode-thunder-client",
     "esbenp.prettier-vscode",
     "Vue.volar",
+    "vue.vscode-typescript-vue-plugin",
     "PKief.material-icon-theme",
     "aaron-bond.better-comments",
     "dbaeumer.vscode-eslint",

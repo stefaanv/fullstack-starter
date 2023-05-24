@@ -1,19 +1,13 @@
 <script setup lang="ts">
-const baseUrl = 'http://localhost:3000'
 import { ref } from 'vue'
-import { StarterDto } from '@nest-vue-starter/shared'
+import { useVersionStore } from '../stores/version-store'
+const versionStore = useVersionStore()
+await versionStore.getState()
+const version = versionStore.version
 
 defineProps<{ msg: string }>()
-async function getVersion(): Promise<StarterDto> {
-  const response = await fetch(`${baseUrl}/api/version`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  })
-  return await response.json()
-}
 
 const count = ref(0)
-const version = await getVersion()
 </script>
 
 <template>
