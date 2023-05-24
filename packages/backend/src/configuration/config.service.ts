@@ -3,11 +3,17 @@ import { watch } from 'fs/promises'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { ConfigService as NestConfigService } from '@nestjs/config'
+import { CONFIG_FILE_NAME } from '@src/app.module'
 
 @Injectable()
 export class ConfigService {
   private _config: any = {}
-  private _configFullpath = join(__dirname, '../..', process.env.CONFIG_FILE ?? '')
+  private _configFullpath = join(
+    __dirname,
+    '../..',
+    process.env.CONFIG_FOLDER ?? 'config',
+    CONFIG_FILE_NAME,
+  )
   constructor(private readonly _configService: NestConfigService) {
     this.loadConfig()
     this.startWatcher()
@@ -21,9 +27,18 @@ export class ConfigService {
   }
 
   async loadConfig() {
-    const content = readFileSync(this._configFullpath)
-    this._config = JSON.parse(content.toString())
-    console.log(this._config)
+    // TODO also replace values from a secrets vault
+    let content = readFileSync(this._configFullpath).toString()
+    if (content) {
+      const matches = content.match(/({{\w+}})/gm)
+      if (matches) {
+        for (const match of matches) {
+          const value = process.env[match.replace(/{{|}}/g, '')]
+          if (value) content = content.replace(new RegExp(`${match}`, 'gm'), value)
+        }
+      }
+      this._config = JSON.parse(content)
+    }
   }
 
   public get<T>(key: string, defaultValue: T | undefined) {

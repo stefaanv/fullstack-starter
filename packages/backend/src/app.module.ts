@@ -1,13 +1,15 @@
 import { Module, Scope } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { AppController } from '@src/app.controller'
+import { AppService } from '@src/app.service'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
-import { LogFacade } from './logging/logger'
-import { ConfigService } from './configuration/config.service'
+import { LogFacade } from '@src/logging/logger'
+import { ConfigService } from '@src/configuration/config.service'
 
 export const APP_NAME = 'fullstack-starter'
+export const CONFIG_FILE_NAME = 'config.json'
+
 @Module({
   imports: [
     ConfigModule.forRoot({

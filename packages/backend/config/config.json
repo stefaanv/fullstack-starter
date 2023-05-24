@@ -1,6 +1,8 @@
 {
   "test": "mijn test zin",
+  "port": "{{PORT}}",
   "database": {
-    "host": "db-host"
+    "host": "{{DB_HOST}}",
+    "password": "{{DB_PASSWORD}}"
   }
 }

@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-// import { ConfigService } from '@nestjs/config'
-import { ConfigService } from './configuration/config.service'
-import { LogFacade } from './logging/logger'
+import { ConfigService } from '@src/configuration/config.service'
+import { LogFacade } from '@src/logging/logger'
 import { AppService } from './app.service'
 
 async function bootstrap() {
