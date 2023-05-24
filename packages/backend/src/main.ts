@@ -6,6 +6,7 @@ import { VersionService } from './version/version.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.enableCors()
   const config = app.get(ConfigService)
   const port = parseInt(config.get<string>('PORT', '3005'))
   const globalApiPrefix = config.get<string>('API_PREFIX', 'api')
