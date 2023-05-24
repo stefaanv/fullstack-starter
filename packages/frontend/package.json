@@ -9,11 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.47",
-    "@nest-vue-starter/shared": "^1.0.0"
+    "@nest-vue-starter/shared": "^1.0.0",
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
+    "prettier": "2.8.8",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vue-tsc": "^1.4.2"
