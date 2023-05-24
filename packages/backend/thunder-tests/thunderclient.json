@@ -12,5 +12,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "73904882-b49f-48af-9b67-4c69d995e3a1",
+    "colId": "ff747450-e0b0-47c0-981d-2e608ca5e698",
+    "containerId": "",
+    "name": "get frontend config",
+    "url": "{{baseUrl}}/api/config",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-05-24T16:12:58.155Z",
+    "modified": "2023-05-24T16:13:28.219Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

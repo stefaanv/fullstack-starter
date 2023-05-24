@@ -4,6 +4,7 @@ import { join } from 'path'
 import { readFileSync } from 'fs'
 import { ConfigService as NestConfigService } from '@nestjs/config'
 import { CONFIG_FILE_NAME } from '@src/app.module'
+import { FRONTEND_CONFIG_FILE_NAME } from '@src/app.module'
 
 @Injectable()
 export class ConfigService {
@@ -13,6 +14,12 @@ export class ConfigService {
     '../..',
     process.env.CONFIG_FOLDER ?? 'config',
     CONFIG_FILE_NAME,
+  )
+  private _feConfigFullpath = join(
+    __dirname,
+    '../..',
+    process.env.CONFIG_FOLDER ?? 'config',
+    FRONTEND_CONFIG_FILE_NAME,
   )
   constructor(private readonly _configService: NestConfigService) {
     this.loadConfig()
@@ -49,5 +56,10 @@ export class ConfigService {
       if (result === undefined) return defaultValue
     }
     return result
+  }
+
+  public async getFrontendConfig() {
+    const fn = (await import(this._feConfigFullpath)).default
+    return fn(this._config)
   }
 }

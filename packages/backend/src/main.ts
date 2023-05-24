@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.enableCors()
   const config = app.get(ConfigService)
-  const port = parseInt(config.get<string>('PORT', '3005'))
+  const port = parseInt(config.get<string>('port', '3005'))
   const globalApiPrefix = config.get<string>('API_PREFIX', 'api')
   app.setGlobalPrefix(globalApiPrefix)
   const version = app.get(AppService).version
