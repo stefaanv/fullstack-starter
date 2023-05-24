@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useVersionStore } from '@stores/version-store'
-const versionStore = useVersionStore()
-const version = versionStore.version
+import { useSettingsStore } from '@stores/settings-store'
+const versionStore = useSettingsStore()
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
-console.log(import.meta.env.VITE_TEST)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
-  <p>Program {{ version.name }} version {{ version.version }}</p>
+  <p>
+    Program {{ versionStore.version.name }} version {{ versionStore.version.version }}, commit
+    {{ versionStore.version.commitId }}
+  </p>
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>

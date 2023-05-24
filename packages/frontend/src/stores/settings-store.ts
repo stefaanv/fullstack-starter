@@ -3,18 +3,13 @@ import { defineStore } from 'pinia'
 
 const baseUrl = 'http://localhost:3000'
 
-interface VersionState {
+interface SettingsState {
   version: StarterDto
 }
 
-export const useVersionStore = defineStore('version', {
-  state: (): VersionState => ({
-    version: {
-      folder: 'backend',
-      name: 'pinia-test',
-      someNumber: 3.1415,
-      version: '1.2.30',
-    } as StarterDto,
+export const useSettingsStore = defineStore('version', {
+  state: (): SettingsState => ({
+    version: {} as StarterDto,
   }),
   actions: {
     async load() {
@@ -23,6 +18,7 @@ export const useVersionStore = defineStore('version', {
         headers: { 'Content-Type': 'application/json' },
       })
       this.version = await response.json()
+      console.log(this.version)
     },
   },
 })
