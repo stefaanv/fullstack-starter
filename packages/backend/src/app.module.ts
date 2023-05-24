@@ -5,6 +5,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
 import { LogFacade } from './logging/logger'
+import { ConfigService } from './configuration/config.service'
 
 export const APP_NAME = 'fullstack-starter'
 @Module({
@@ -26,6 +27,7 @@ export const APP_NAME = 'fullstack-starter'
       useClass: LogFacade,
       scope: Scope.TRANSIENT,
     },
+    ConfigService,
     AppService,
   ],
 })

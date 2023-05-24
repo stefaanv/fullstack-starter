@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { LogFacade } from './logging/logger'
-import { VersionService } from './version/version.service'
 import * as childProcess from 'child_process'
 import { APP_NAME } from 'src/app.module'
 
