@@ -7,6 +7,7 @@ const version = versionStore.version
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+console.log(import.meta.env.VITE_TEST)
 </script>
 
 <template>
