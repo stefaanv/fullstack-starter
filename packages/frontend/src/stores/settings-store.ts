@@ -13,13 +13,17 @@ export const useSettingsStore = defineStore('version', {
     config: {},
   }),
   actions: {
-    load: loadVersionAndConfig,
+    async load() {
+      const { version, config } = await loadVersionAndConfig()
+      this.config = config
+      this.version = version
+      return { version, config }
+    },
   },
 })
 
 async function loadVersionAndConfig(): Promise<SettingsState> {
   const vResult = await axios.get<VersionDto>('version')
   const cResult = await axios.get<FrontendConfigDto>('config')
-  console.log(cResult.data)
   return { version: vResult.data, config: cResult.data }
 }

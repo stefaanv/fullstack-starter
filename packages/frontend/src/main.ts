@@ -12,15 +12,7 @@ function joinUrl(...parts: string[]) {
 }
 
 async function start() {
-  // const baseUrl = 'http://localhost:3000'
-  const baseURL =
-    import.meta.env.MODE === 'production'
-      ? joinUrl(window.location.origin, import.meta.env.VITE_BACKEND_URL)
-      : import.meta.env.VITE_BACKEND_URL
-
-  axios.defaults.baseURL = baseURL
-  axios.defaults.timeout = API_TIMEOUT
-
+  setAxiosDefaults()
   const pinia = createPinia()
   const app = createApp(App)
   app.use(pinia)
@@ -29,3 +21,13 @@ async function start() {
   app.mount('#app')
 }
 start()
+
+function setAxiosDefaults() {
+  const baseURL =
+    import.meta.env.MODE === 'production'
+      ? joinUrl(window.location.origin, import.meta.env.VITE_BACKEND_URL)
+      : import.meta.env.VITE_BACKEND_URL
+
+  axios.defaults.baseURL = baseURL
+  axios.defaults.timeout = API_TIMEOUT
+}
