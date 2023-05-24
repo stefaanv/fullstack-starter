@@ -1,3 +1,6 @@
 {
-  "test": "mijn test zin"
+  "test": "mijn test zin",
+  "database": {
+    "host": "db-host"
+  }
 }
