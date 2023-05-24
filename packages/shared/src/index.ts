@@ -1,3 +1,3 @@
-import { StarterDto } from './starter.dto'
-const SHARED = 'shared constant'
-export { StarterDto, SHARED }
+import { VersionDto } from './dtos/version.dto'
+import { FrontendConfigDto } from './dtos/frontend-settings.dto'
+export { VersionDto, FrontendConfigDto }

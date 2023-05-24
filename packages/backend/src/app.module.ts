@@ -9,7 +9,7 @@ import { ConfigService } from '@src/configuration/config.service'
 
 export const APP_NAME = 'fullstack-starter'
 export const CONFIG_FILE_NAME = 'config.json'
-export const FRONTEND_CONFIG_FILE_NAME = 'backend-to-frontend.js'
+export const FRONTEND_CONFIG_FILE_NAME = 'backend-config-to-frontend.js'
 
 @Module({
   imports: [

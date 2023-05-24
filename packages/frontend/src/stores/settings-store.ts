@@ -1,34 +1,25 @@
-import { StarterDto } from '@nest-vue-starter/shared'
+import { FrontendConfigDto, VersionDto } from '@nest-vue-starter/shared'
+import axios from 'axios'
 import { defineStore } from 'pinia'
 
-function joinUrl(...parts: string[]) {
-  return parts.reduce((accu, curr) => (accu ? accu.replace(/\/$/, '') + '/' + curr : curr), '')
-}
-// const baseUrl = 'http://localhost:3000'
-const baseUrl =
-  import.meta.env.MODE === 'production'
-    ? joinUrl(window.location.origin, import.meta.env.VITE_BACKEND_URL)
-    : import.meta.env.VITE_BACKEND_URL
 interface SettingsState {
-  version: StarterDto
-  baseUrl: string
+  version: VersionDto
+  config: FrontendConfigDto
 }
 
 export const useSettingsStore = defineStore('version', {
   state: (): SettingsState => ({
-    version: {} as StarterDto,
-    baseUrl,
+    version: {} as VersionDto,
+    config: {},
   }),
   actions: {
-    async load() {
-      const url = joinUrl(this.baseUrl, 'version')
-      console.log(import.meta.env.MODE)
-      console.log(url)
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      })
-      this.version = await response.json()
-    },
+    load: loadVersionAndConfig,
   },
 })
+
+async function loadVersionAndConfig(): Promise<SettingsState> {
+  const vResult = await axios.get<VersionDto>('version')
+  const cResult = await axios.get<FrontendConfigDto>('config')
+  console.log(cResult.data)
+  return { version: vResult.data, config: cResult.data }
+}
