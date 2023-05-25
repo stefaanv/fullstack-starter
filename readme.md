@@ -10,6 +10,9 @@ A number of never-wrong features like logging, configuration, frontend stores, e
 are added and pre-configured in such a way that they will not get in the way
 and are easy to remove.
 
+The combination of selected technologie is "seasoned" because it evolved after
+years of programming fullstack applications. 
+
 I intend to further extend this repository and to keep in step with the underlaying
 technologies, so come back later for more.
 
@@ -55,7 +58,7 @@ helps to write well-structured, clean code
   - [pinia v2](https://pinia.vuejs.org/) - frontend global data management
 
 ### Never-wrong's
-#### Logging
+#### Backend logging
 The logging infrastucture includes the `LogService`, `LogInterface` and
 `NullLoggerService` assets in `<root>/src/logging/`.  `LoggerService` is a simple
 facade in front of the Nest `ConsoleLogger`.  You can adapt it to your liking
@@ -101,7 +104,16 @@ sure to use the `urgent` level sparecely and to implement some throttling mechan
 to avoid being overwhelmed by urgent messages ! 
 
 #### Configuration
+Every real-life project needs configuration.  To facilitate container
+deployment, the configuration files are located in a separate folder
+outside of the Typescript build (`src`) : `backend/config/config.json` and `backend/config/backed-config-to-frontend.js` files.
 
+Define the (backend) configuration hierarchically in `config.json`. In
+`backed-config-to-frontend.js` you define which elements of the backend
+configuration must be sent to the frontend and you can add extra
+frontend-only configuration.
+
+Both files are watched and reloaded when they change
 #### Frontend configuration
 
 #### Pinia stores
