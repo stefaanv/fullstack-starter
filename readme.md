@@ -47,7 +47,7 @@ UI coloring.
 for Typescript.  If you prefer a different language you probably want to select a
 different starter template.
 - [Nestjs v9.0](https://nestjs.com/) - a well-established,
-[express](https://expressjs.com/)-based framework for creating REST APIs that
+[Express](https://expressjs.com/)-based framework for creating REST APIs that
 helps to write well-structured, clean code
   - [mikro-orm v5.7](https://mikro-orm.io/) Having tried *sequelize* en *typeorm* ORMs, I settled for mikro-orm because it is well-structured, performant and under active development.
 - [Vite v4.3](https://vitejs.dev/)
@@ -57,12 +57,28 @@ helps to write well-structured, clean code
 ### Never-wrong's
 #### Logging
 The logging infrastucture includes the `LogService`, `LogInterface` and
-`NullLoggerService` in `<root>/src/logging/`.  `LoggerService` is a simple
-facade in front of the Nest ConsoleLogger.  You can adapt it to your liking
-if for instance you want to log to files or to any kind of log server.
+`NullLoggerService` assets in `<root>/src/logging/`.  `LoggerService` is a simple
+facade in front of the Nest `ConsoleLogger`.  You can adapt it to your liking
+to - for instance - send the logs to your favorite log server.
+Simple console logging is available out-of-the-box, you can expand on the
+as you see fit.
 
-The logger supports `context`, `metadata` and `uid`.  The context is usually set
-to the name of the *service* or *controller* like this
+All log function have signature 
+```ts
+log(message: string, params?: OptionalLogParameters)
+```
+with 
+```ts
+interface OptionalLogParameters {
+  context?: string
+  uuid?: string
+  meta?: unknown
+}
+```
+
+The logger supports `context`, `metadata` and `uid` extra's next to the usual 
+string message.  The context is usually set to the name of the *service* or
+*controller* like this
 
 ```ts
 export class SomeService {
@@ -74,9 +90,15 @@ export class SomeService {
 ```
 
 `uid` can be used to assign a short unique id to every log statement.  That helps
-to find the statement back based on the logging.
+to find the statement back based on the logging.  I usually use a 5-character long uuid.
 
 `meta-data` can be used to add variables to the logging.
+
+On top of the traditional `log`, `error`, `warn`, `debug` and `verbose` loglevels, an
+additional `urgent` level is provided .  It's purpose is to have the urgent log messages
+sent to yourself (the developer) when you operate in a devops environment.  Make
+sure to use the `urgent` level sparecely and to implement some throttling mechanism
+to avoid being overwhelmed by urgent messages ! 
 
 #### Configuration
 
