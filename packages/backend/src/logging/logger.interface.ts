@@ -4,7 +4,7 @@ export interface OptionalLogParameters {
   meta?: unknown
 }
 
-export interface LoggerInterface {
+export interface LogInterface {
   context: string
   log(message: string, params?: OptionalLogParameters): void
   error(message: string, params?: OptionalLogParameters): void

@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@src/configuration/config.service'
-import { LogFacade } from '@src/logging/logger'
+import { LogService } from '@src/logging/log.service'
 import * as childProcess from 'child_process'
 import { APP_NAME } from '@src/app.module'
 
 @Injectable()
 export class AppService {
-  constructor(private readonly _log: LogFacade, private readonly _config: ConfigService) {
+  constructor(private readonly _log: LogService, private readonly _config: ConfigService) {
     this._log.context = AppService.name
-    this._log.log('constructing AppService class')
   }
 
   get name() {
