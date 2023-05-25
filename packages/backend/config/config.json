@@ -1,5 +1,6 @@
 {
   "windowTitle": "{{APP_DESCRIPTION}}",
+  "appName": "{{APP_NAME}}",
   "port": "{{PORT}}",
   "database": {
     "host": "{{DB_HOST}}",

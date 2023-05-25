@@ -41,9 +41,9 @@ export class ConfigService {
       if (matches) {
         for (const match of matches) {
           const value =
-            match === 'APP_DESCRIPTION'
+            match === '{{APP_DESCRIPTION}}'
               ? APP_DESCRIPTION
-              : match === 'APP_NAME'
+              : match === '{{APP_NAME}}'
               ? APP_NAME
               : process.env[match.replace(/{{|}}/g, '')]
           if (value) content = content.replace(new RegExp(`${match}`, 'gm'), value)
