@@ -3,8 +3,8 @@ import { watch } from 'fs/promises'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { ConfigService as NestConfigService } from '@nestjs/config'
-import { CONFIG_FILE_NAME } from '@src/app.module'
-import { FRONTEND_CONFIG_FILE_NAME } from '@src/app.module'
+import { APP_DESCRIPTION, CONFIG_FILE_NAME } from '@src/app.module'
+import { FRONTEND_CONFIG_FILE_NAME, APP_NAME } from '@src/app.module'
 
 @Injectable()
 export class ConfigService {
@@ -40,7 +40,12 @@ export class ConfigService {
       const matches = content.match(/({{\w+}})/gm)
       if (matches) {
         for (const match of matches) {
-          const value = process.env[match.replace(/{{|}}/g, '')]
+          const value =
+            match === 'APP_DESCRIPTION'
+              ? APP_DESCRIPTION
+              : match === 'APP_NAME'
+              ? APP_NAME
+              : process.env[match.replace(/{{|}}/g, '')]
           if (value) content = content.replace(new RegExp(`${match}`, 'gm'), value)
         }
       }
