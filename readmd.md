@@ -10,6 +10,15 @@ A number of never-wrong features like logging, configuration, frontend stores, e
 are added and pre-configured in such a way that they will not impede the developer
 when not needed or are easy to remove.
 
+I intend to further extend this repository and to keep in step with the underlaying
+technologies, so come back later for more.
+
+You can move directly to [the getting started part](#getting-started).
+
+## Setup
+
+### base technologies
+
 ## Running the code
 In 3 separate terminal windows, run
 - `npm run build:watch -w @nest-vue-starter/shared`
