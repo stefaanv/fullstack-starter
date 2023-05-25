@@ -49,6 +49,7 @@ different starter template.
 - [Nestjs v9.0](https://nestjs.com/) - a well-established,
 [express](https://expressjs.com/)-based framework for creating REST APIs that
 helps to write well-structured, clean code
+  - [mikro-orm v5.7](https://mikro-orm.io/) Having tried *sequelize* en *typeorm* ORMs, I settled for mikro-orm because it is well-structured, performant and under active development.
 - [Vite v4.3](https://vitejs.dev/)
 - [Vue v3.3](https://blog.vuejs.org/posts/vue-3-3) - frontend framework
   - [pinia v2](https://pinia.vuejs.org/) - frontend global data management
