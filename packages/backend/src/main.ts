@@ -8,13 +8,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.enableCors()
   const config = app.get(ConfigService)
+  config.bootstrap()
   const port = parseInt(config.get<string>('port', '3005'))
   const globalApiPrefix = config.get<string>('API_PREFIX', 'api')
   app.setGlobalPrefix(globalApiPrefix)
-  const version = app.get(AppService).version
+  const version = config.appInfo
   const log = await app.resolve(LogService)
 
-  log.log(`Starting ${version.name} v${version.version}`, { meta: version })
+  log.log(`Starting ${version.appName} v${version.version}`, { meta: version })
   log.log(`Start listening to port ${port}`, { context: 'main' })
   await app.listen(port)
 }
