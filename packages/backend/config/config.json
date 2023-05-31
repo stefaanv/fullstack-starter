@@ -1,9 +1,9 @@
 {
-  "windowTitle": "{{APP_DESCRIPTION}}",
-  "appName": "{{APP_NAME}}",
   "port": "{{PORT}}",
+  "api-prefix": "api",
   "database": {
     "host": "{{DB_HOST}}",
+    "user": "{{DB_USER}}",
     "password": "{{DB_PASSWORD}}"
   }
 }

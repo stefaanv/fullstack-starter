@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ConfigService } from '@src/configuration/config.service'
 import { LogService } from '@src/logging/log.service'
-import { AppService } from './app.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -10,13 +9,14 @@ async function bootstrap() {
   const config = app.get(ConfigService)
   config.bootstrap()
   const port = parseInt(config.get<string>('port', '3005'))
-  const globalApiPrefix = config.get<string>('API_PREFIX', 'api')
+  const globalApiPrefix = config.get<string>('api-prefix', 'api')
   app.setGlobalPrefix(globalApiPrefix)
-  const version = config.appInfo
   const log = await app.resolve(LogService)
 
-  log.log(`Starting ${version.appName} v${version.version}`, { meta: version })
-  log.log(`Start listening to port ${port}`, { context: 'main' })
+  log.log(`Starting ${config.appInfo.appName} v${config.appInfo.version}`)
+  log.log(`Start listening to port ${port}, api prefix is '${globalApiPrefix}'`, {
+    context: 'main',
+  })
   await app.listen(port)
 }
 bootstrap()

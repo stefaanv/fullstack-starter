@@ -3,25 +3,31 @@ import { watch } from 'fs/promises'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { ConfigService as NestConfigService } from '@nestjs/config'
-import { APP_DESCRIPTION, CONFIG_FILE_NAME } from '@src/app.module'
-import { FRONTEND_CONFIG_FILE_NAME, APP_NAME } from '@src/app.module'
-import { VersionDto } from '@nest-vue-starter/shared'
+import { CONFIG_FILE_NAME, FRONTEND_CONFIG_FILE_NAME } from '@src/app.module'
+import { AppInfoDto } from '@nest-vue-starter/shared'
 import * as childProcess from 'child_process'
+import { encapsulateError } from '@src/helpers/error-handling'
+import { LogService } from '@src/logging/log.service'
 
 const ROOT_PACKAGE_REL_FOLDER_DEV = '../../../../package.json'
 const ROOT_PACKAGE_REL_FOLDER_OTHER = './package.json' //TODO nog aanpassen
 type PackageJson = { name: string; version: string; author: string; description: string }
 
+const APP_INFO_KEYS = {}
+
 @Injectable()
 export class ConfigService {
-  private _config: any = {}
+  private _config: { appInfo: AppInfoDto } | Record<string, unknown> = {}
   private _configFullpath: string
   private _feConfigFullpath: string
   private _rootPackageJsonFullpath: string
-  public appInfo = new VersionDto()
+  public appInfo = new AppInfoDto()
 
-  constructor(private readonly _configService: NestConfigService) {
-    const configFolder = join(__dirname, '../..', process.env.CONFIG_FOLDER ?? 'config')
+  constructor(
+    private readonly _configService: NestConfigService,
+    private readonly _log: LogService,
+  ) {
+    const configFolder = join(__dirname, '../..', process.env.CONFIG_FOLDER ?? 'test')
     this._configFullpath = join(configFolder, CONFIG_FILE_NAME)
     this._feConfigFullpath = join(configFolder, FRONTEND_CONFIG_FILE_NAME)
     const packageJsonRootPath = process.env.NODE_ENV?.toLowerCase().startsWith('dev')
@@ -31,14 +37,18 @@ export class ConfigService {
   }
 
   async startWatcher() {
-    const watcher = watch(this._configFullpath)
-    for await (const event of watcher) {
-      this.bootstrap()
+    try {
+      const watcher = watch(this._configFullpath)
+      for await (const event of watcher) {
+        this.bootstrap()
+      }
+    } catch (err) {
+      const error = encapsulateError(err)
+      this._log.error(`Unable to watch config folder - "${error.message}"`)
     }
   }
 
   async readPackageJson() {
-    console.log(this._rootPackageJsonFullpath)
     const content = readFileSync(this._rootPackageJsonFullpath).toString()
     const pkg: PackageJson = JSON.parse(content)
     this.appInfo.setPackageInfo(pkg)
@@ -47,18 +57,19 @@ export class ConfigService {
   async bootstrap() {
     this.readPackageJson()
     this.appInfo.commitId = this.getCommitId()
+    let content = '{}'
     // TODO also replace values from a secrets vault
-    let content = readFileSync(this._configFullpath).toString()
+    try {
+      content = readFileSync(this._configFullpath).toString()
+    } catch (err) {
+      const error = encapsulateError(err)
+      this._log.error(`Configuration file not found - "${error.message}"`)
+    }
     if (content) {
       const matches = content.match(/({{\w+}})/gm)
       if (matches) {
         for (const match of matches) {
-          const value =
-            match === '{{APP_DESCRIPTION}}'
-              ? APP_DESCRIPTION
-              : match === '{{APP_NAME}}'
-              ? APP_NAME
-              : process.env[match.replace(/{{|}}/g, '')]
+          const value = process.env[match.replace(/{{|}}/g, '')]
           if (value) content = content.replace(new RegExp(`${match}`, 'gm'), value)
         }
       }
@@ -79,18 +90,23 @@ export class ConfigService {
     return 'unknown'
   }
 
-  public get<T>(key: string, defaultValue: T | undefined) {
-    const keys = key.split('.')
-    let result = this._config
-    for (const k of keys) {
-      result = Object.getOwnPropertyNames(result).includes(k) ? result[k] : undefined
-      if (result === undefined) return defaultValue
+  public get<T>(keyChain: string, defaultValue: T | undefined) {
+    let result: any = this._config
+    for (const k of keyChain.split('.')) {
+      if (!Object.getOwnPropertyNames(this._config).includes(k)) {
+        result = undefined
+        break
+      } else {
+        const tuple = Object.entries(this._config).find(([key, value]) => key === k)
+        result = tuple ? (tuple[1] as T) : undefined
+      }
     }
-    return result
+    return result ?? defaultValue
   }
 
   public async getFrontendConfig() {
     const fn = (await import(this._feConfigFullpath)).default
-    return fn(this._config)
+    const feConfig = { ...fn(this._config), appInfo: this.appInfo }
+    return feConfig
   }
 }

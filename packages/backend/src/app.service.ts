@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@src/configuration/config.service'
 import { LogService } from '@src/logging/log.service'
-import { APP_NAME } from '@src/app.module'
 
 @Injectable()
 export class AppService {

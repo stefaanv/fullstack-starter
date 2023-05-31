@@ -1,4 +1,4 @@
-export class VersionDto {
+export class AppInfoDto {
   public appName = 'fullstack-starter'
   public appDescription = 'fullstack-starter description'
   public appAuthor = 'Stefaan Vandevelde'

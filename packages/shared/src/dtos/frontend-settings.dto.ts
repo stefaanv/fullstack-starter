@@ -1,10 +1,3 @@
-import { VersionDto } from './version.dto'
-
-export type FrontendConfigDto =
-  | {
-      windowTitle: string
-      version: VersionDto
-      appName: string
-      appDescritption: string
-    }
-  | Record<string, any>
+import { AppInfoDto } from './app-info.dto'
+type FrontendConfigDto = Record<string, unknown>
+export { AppInfoDto, type FrontendConfigDto }
