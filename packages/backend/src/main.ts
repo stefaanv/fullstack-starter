@@ -13,8 +13,8 @@ async function bootstrap() {
   app.setGlobalPrefix(globalApiPrefix)
   const log = await app.resolve(LogService)
 
-  log.log(`Starting ${config.appInfo.appName} v${config.appInfo.version}`)
-  log.log(`Start listening to port ${port}, api prefix is '${globalApiPrefix}'`, {
+  log.info(`Starting ${config.appInfo.appName} v${config.appInfo.version}`)
+  log.info(`Start listening to port ${port}, api prefix is '${globalApiPrefix}'`, {
     context: 'main',
   })
   await app.listen(port)

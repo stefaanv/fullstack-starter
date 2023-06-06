@@ -6,7 +6,7 @@ export interface OptionalLogParameters {
 
 export interface LogInterface {
   context: string
-  log(message: string, params?: OptionalLogParameters): void
+  info(message: string, params?: OptionalLogParameters): void
   error(message: string, params?: OptionalLogParameters): void
   urgent(message: string, params?: OptionalLogParameters): void
   warn(message: string, params?: OptionalLogParameters): void

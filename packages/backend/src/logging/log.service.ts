@@ -18,7 +18,7 @@ export class LogService implements LogInterface {
     return allDefined.join(' ')
   }
 
-  log(message: string, params?: OptionalLogParameters) {
+  info(message: string, params?: OptionalLogParameters) {
     this._nestLogger.log(this.format(message, params), params?.context ?? this._context)
   }
 
