@@ -1,7 +1,11 @@
+export type Emphasize = 'color' | 'startup'
+
 export interface OptionalLogParameters {
   context?: string
   uuid?: string
   meta?: unknown
+  consoleOnly?: boolean
+  emphasizeInConsole?: Emphasize
 }
 
 export interface LogInterface {
