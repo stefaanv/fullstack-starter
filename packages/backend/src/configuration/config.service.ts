@@ -4,9 +4,8 @@ import { join } from 'path'
 import { readFileSync } from 'fs'
 import { ConfigService as NestConfigService } from '@nestjs/config'
 import { CONFIG_FILE_NAME, FRONTEND_CONFIG_FILE_NAME } from '@src/app.module'
-import { AppInfoDto } from '@nest-vue-starter/shared'
+import { AppInfoDto, ensureError } from '@nest-vue-starter/shared'
 import * as childProcess from 'child_process'
-import { encapsulateError } from '@src/helpers/error-handling'
 import { LogService } from '@src/logging/log.service'
 
 const ROOT_PACKAGE_REL_FOLDER_DEV = '../../../../package.json'
@@ -43,7 +42,7 @@ export class ConfigService {
         this.bootstrap()
       }
     } catch (err) {
-      const error = encapsulateError(err)
+      const error = ensureError(err)
       this._log.error(`Unable to watch config folder - "${error.message}"`)
     }
   }
@@ -62,7 +61,7 @@ export class ConfigService {
     try {
       content = readFileSync(this._configFullpath).toString()
     } catch (err) {
-      const error = encapsulateError(err)
+      const error = ensureError(err)
       this._log.error(`Configuration file not found - "${error.message}"`)
     }
     if (content) {
