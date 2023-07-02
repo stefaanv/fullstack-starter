@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { watch } from 'fs/promises'
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import { ConfigService as NestConfigService } from '@nestjs/config'
-import { CONFIG_FILE_NAME, FRONTEND_CONFIG_FILE_NAME } from '@src/app.module'
+import { CONFIG_FILE_NAME, CONFIG_SETTINGS_TOKEN, FRONTEND_CONFIG_FILE_NAME } from '@src/app.module'
 import { AppInfoDto, ensureError } from '@nest-vue-starter/shared'
 import * as childProcess from 'child_process'
 import { LogService } from '@src/logging/log.service'
@@ -12,11 +12,20 @@ const ROOT_PACKAGE_REL_FOLDER_DEV = '../../../../package.json'
 const ROOT_PACKAGE_REL_FOLDER_OTHER = './package.json' //TODO nog aanpassen
 type PackageJson = { name: string; version: string; author: string; description: string }
 
+export type ConfigOrigin = 'javascript' | 'json' | 'infisical'
+export type ConfigBaseSettingsBase = { origin: ConfigOrigin; dynamic: boolean }
+export type FileConfigSettings = ConfigBaseSettingsBase & {
+  configFileRelativePath: string
+}
+export type InfisicalConfigSettings = ConfigBaseSettingsBase & {
+  configHost: string
+}
+
 const APP_INFO_KEYS = {}
 
 @Injectable()
 export class ConfigService {
-  private _config: { appInfo: AppInfoDto } | Record<string, unknown> = {}
+  private _content: { appInfo: AppInfoDto } | Record<string, unknown> = {}
   private _configFullpath: string
   private _feConfigFullpath: string
   private _rootPackageJsonFullpath: string
@@ -25,6 +34,7 @@ export class ConfigService {
   constructor(
     private readonly _configService: NestConfigService,
     private readonly _log: LogService,
+    @Inject('CONFIG_SETTINGS') private readonly _configSettings: ConfigBaseSettingsBase,
   ) {
     const configFolder = join(__dirname, '../..', process.env.CONFIG_FOLDER ?? 'test')
     this._configFullpath = join(configFolder, CONFIG_FILE_NAME)
@@ -53,9 +63,39 @@ export class ConfigService {
     this.appInfo.setPackageInfo(pkg)
   }
 
+  get configFileFullPath(): string {
+    if (!['javascript', 'json'].includes(this._configSettings.origin)) {
+      throw new Error(`not allowed for config type ${this._configSettings.origin}`)
+    }
+    const relativePath = (this._configSettings as FileConfigSettings).configFileRelativePath
+    return join(__dirname, '..', relativePath)
+  }
+
   async bootstrap() {
     this.readPackageJson()
     this.appInfo.commitId = this.getCommitId()
+    switch (this._configSettings.origin) {
+      case 'json':
+        this._content = await this.readJsonFile()
+        break
+      case 'javascript':
+        this._content = await this.readJavascriptFile()
+        break
+      case 'infisical':
+        throw new Error('Infisical config origin not implemented yet')
+        break
+    }
+    if (this._configSettings.dynamic) this.startWatcher()
+  }
+
+  private async readJavascriptFile() {
+    const file = this.configFileFullPath
+    const configModule = await import(file)
+    const result = configModule.default()
+    return result
+  }
+
+  private async readJsonFile() {
     let content = '{}'
     // TODO also replace values from a secrets vault
     try {
@@ -72,9 +112,8 @@ export class ConfigService {
           if (value) content = content.replace(new RegExp(`${match}`, 'gm'), value)
         }
       }
-      this._config = JSON.parse(content)
+      return JSON.parse(content)
     }
-    this.startWatcher()
   }
 
   getCommitId() {
@@ -89,14 +128,15 @@ export class ConfigService {
     return 'unknown'
   }
 
-  public get<T>(keyChain: string, defaultValue: T | undefined) {
-    let result: any = this._config
+  public get<T>(keyChain: string, defaultValue?: T | undefined) {
+    //TODO: radash gebruiken voor keychain
+    let result: any = this._content
     for (const k of keyChain.split('.')) {
-      if (!Object.getOwnPropertyNames(this._config).includes(k)) {
+      if (!Object.getOwnPropertyNames(this._content).includes(k)) {
         result = undefined
         break
       } else {
-        const tuple = Object.entries(this._config).find(([key, value]) => key === k)
+        const tuple = Object.entries(this._content).find(([key, value]) => key === k)
         result = tuple ? (tuple[1] as T) : undefined
       }
     }
@@ -105,7 +145,7 @@ export class ConfigService {
 
   public async getFrontendConfig() {
     const fn = (await import(this._feConfigFullpath)).default
-    const feConfig = { ...fn(this._config), appInfo: this.appInfo }
+    const feConfig = { ...fn(this._content), appInfo: this.appInfo }
     return feConfig
   }
 }

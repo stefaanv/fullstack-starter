@@ -23,8 +23,9 @@
       "**/CVS": false,
       "**/dist": true
     },
-	  "thunder-client.saveToWorkspace": true,
-	  "thunder-client.workspaceRelativePath": "./packages/backend",
-	  "thunder-client.saveRequestOnSend": false,
+    "thunder-client.saveToWorkspace": true,
+    "thunder-client.workspaceRelativePath": "./packages/backend",
+    "thunder-client.saveRequestOnSend": false,
+    "typescript.tsdk": "root\\node_modules\\typescript\\lib"
   }
 }
