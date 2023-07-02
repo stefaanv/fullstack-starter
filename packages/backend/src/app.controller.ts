@@ -8,7 +8,7 @@ export class AppController {
 
   @Get('version')
   getVersion() {
-    return this._appService.version
+    return this._config.appInfo
   }
 
   @Get('config')

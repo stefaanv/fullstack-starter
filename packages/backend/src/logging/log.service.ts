@@ -1,7 +1,10 @@
-import { ConsoleLogger } from '@nestjs/common'
+import { ConsoleLogger, Injectable, Scope } from '@nestjs/common'
 import { LogInterface, OptionalLogParameters } from './log.interface'
 import { white } from 'ansi-colors'
 
+@Injectable({
+  scope: Scope.TRANSIENT,
+})
 export class LogService implements LogInterface {
   private _context = 'unknown'
   private _nestLogger = new ConsoleLogger()
@@ -18,7 +21,7 @@ export class LogService implements LogInterface {
     return allDefined.join(' ')
   }
 
-  log(message: string, params?: OptionalLogParameters) {
+  info(message: string, params?: OptionalLogParameters) {
     this._nestLogger.log(this.format(message, params), params?.context ?? this._context)
   }
 

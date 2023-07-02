@@ -3,7 +3,7 @@ import { LogInterface } from './log.interface'
 
 export class NullLoggerService implements LogInterface {
   set context(_value: string) {}
-  log() {}
+  info() {}
   error() {}
   urgent() {}
   warn() {}
