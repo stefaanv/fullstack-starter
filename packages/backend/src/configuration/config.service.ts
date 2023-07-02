@@ -6,6 +6,17 @@ import { ConfigService as NestConfigService } from '@nestjs/config'
 import { APP_DESCRIPTION, CONFIG_FILE_NAME } from '@src/app.module'
 import { FRONTEND_CONFIG_FILE_NAME, APP_NAME } from '@src/app.module'
 
+export type ConfigType = 'javascript' | 'json' | 'infisical'
+export type BaseConfigSettings = {
+  dynamic: boolean
+}
+export type FileConfigSettings = BaseConfigSettings & {
+  configFileRelativePath: string
+}
+export type InfisicalConfigSettings = BaseConfigSettings & {
+  host: string
+}
+
 @Injectable()
 export class ConfigService {
   private _config: any = {}
@@ -53,7 +64,7 @@ export class ConfigService {
     }
   }
 
-  public get<T>(key: string, defaultValue: T | undefined) {
+  public get<T>(key: string, defaultValue?: T) {
     const keys = key.split('.')
     let result = this._config
     for (const k of keys) {
